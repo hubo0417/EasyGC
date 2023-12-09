@@ -1,0 +1,26 @@
+[
+    {
+        "name": "InkWashpainting",
+        "tag_words": "InkWashpainting",
+        "scale": 0.9,
+        "sored": 1.0
+    },
+    {
+        "name": "mecha-000009",
+        "tag_words": "mecha",
+        "scale": 0.8,
+        "sored": 3.0
+    },
+    {
+        "name": "SDXLPaintSplash",
+        "tag_words": "Colorsplash",
+        "scale": 0.9,
+        "sored": 4.0
+    },
+    {
+        "name": "higirl_v1",
+        "tag_words": "higirl",
+        "scale": 0.9,
+        "sored": 5.0
+    }
+]

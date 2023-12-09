@@ -1,0 +1,16 @@
+protobuf
+transformers==4.32.0
+cpm_kernels
+torch>=2.0
+charset_normalizer --upgrade
+pyreadline
+langchain==0.0.291
+gradio==3.42.0
+sentencepiece
+accelerate==0.23.0
+diffusers --upgrade
+chromadb==0.4.10
+bs4
+pypdf
+PyPDF2
+sentence-transformers

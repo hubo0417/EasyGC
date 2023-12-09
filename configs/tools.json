@@ -1,0 +1,26 @@
+[
+    {
+        "name": "\u65c5\u884c\u6e38\u8bb0\u751f\u6210\u5de5\u5177",
+        "decription": "\u7528\u4e8e\u751f\u6210\u65c5\u884c\u6e38\u8bb0\u5185\u5bb9\u7684\u5de5\u5177\uff0c\u8f93\u5165\u5173\u952e\uff0c\u8f93\u51fa\u4e00\u7bc7\u5b8c\u6574\u7684\u65c5\u884c\u6e38\u8bb0\u6587\u7ae0",
+        "sorted": 1,
+        "status": 1,
+        "class_name": "Travel_Generate_Tool",
+        "module_name": "agents.tools.travel_generate_tool"
+    },
+    {
+        "name": "\u5206\u955c\u811a\u672c\u5236\u4f5c\u5de5\u5177",
+        "decription": "\u6839\u636e\u8f93\u5165\u5185\u5bb9\u5236\u4f5c\u89c6\u9891\u5206\u955c\u811a\u672c\u7684\u5de5\u5177\uff0c\u8f93\u5165\u5173\u952e\u8bcd\uff0c\u8f93\u51fa\u4e00\u7bc7\u76f8\u5173\u5185\u5bb9\u7684\u5206\u955c\u811a\u672c",
+        "sorted": 1,
+        "status": 1,
+        "class_name": "Literature_Generate_Tool",
+        "module_name": "agents.tools.literature_generate_tool"
+    },
+    {
+        "name": "\u5185\u5bb9\u641c\u7d22\u5de5\u5177",
+        "decription": "\u57fa\u4e8e\u641c\u7d22\u5f15\u64ce\u4ece\u4e92\u8054\u7f51\u90a3\u4e2a\u641c\u7d22\u76f8\u5173\u5185\u5bb9\u7684\u5de5\u5177\uff0c\u8f93\u5165\u641c\u7d22\u5185\u5bb9\u5173\u952e\u8bcd\uff0c\u8f93\u51fa\u5bf9\u5e94\u7f51\u9875\u7684\u5185\u5bb9",
+        "sorted": 1,
+        "status": 1,
+        "class_name": "Web_Parser_Tool",
+        "module_name": "agents.tools.web_parser_tool"
+    }
+]
