@@ -1,13 +1,12 @@
-from enum import Enum
 import openai
-from typing import Iterator, List, Optional, Mapping, Any
+from typing import Iterator, List, Mapping, Any
 from functools import partial
 from langchain.schema.output import GenerationChunk
 from langchain.llms.base import LLM
 from langchain.callbacks.manager import CallbackManagerForLLMRun
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from configs.base_config import AZURE_OPENAI_KEY, AZURE_OPENAI_ENDPOINT
-from llms.chat_data_model import ChatGPT_Chat_Model, GPT_Role
+from langchain.chat_models import AzureChatOpenAI
 
 
 class ChatGPT(LLM):
@@ -109,7 +108,7 @@ class ChatGPT(LLM):
         event_obj.on_chain_end(outputs={"gpt_result": resp})
         return resp
 
-    def load_model(self):
+    def load_model(self, **kwargs):
         if self.model is not None:
             return
         self.model = {}
@@ -119,7 +118,7 @@ class ChatGPT(LLM):
         self.model["api_version"] = "2023-05-15"
 
     def unload_model(self):
-        pass
+        self.model = None
 
     def set_params(self, **kwargs):
         for k, v in kwargs.items():
