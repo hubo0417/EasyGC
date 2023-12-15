@@ -11,8 +11,6 @@ from configs.prompt_config import TOOLS_HTML_TOOL_PROMPT_TEMPLATE
 import requests
 from configs.base_config import GOOGLE_APIKEY, GOOGLE_SEARCH_ID
 import json
-from langchain.chains.summarize import load_summarize_chain
-from langchain.schema.document import Document
 
 
 class Web_Parser_Tool(functional_Tool):
@@ -41,6 +39,7 @@ class Web_Parser_Tool(functional_Tool):
         self.get_llm_chain()
         # 通过用户输入识别出用户输入的关键字，用于到互联网平台搜索内容
         keywords = self.parser_output(self.llm_chain.predict(query=query))
+        # searchType=image&start=1
         self.system_params = f"{self.system_params}&q={keywords}&lr=lang_zh-CN&sort=review-rating:d:s"
         search_result = json.loads(
             requests.get(url=f"{self.base_url}?{self.system_params}").text)
