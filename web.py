@@ -13,6 +13,7 @@ from embeddings.embedding_helper import EmbeddingHelper
 from utils.tool_sets import Tool_Sets
 from utils.lora_sets import Lora_Sets
 from configs.base_config import BASE_CONFIG, BASE_FILE_PATH
+from agents.tools.web_parser_tool import Web_Parser_Tool_Response
 
 uploaded_image_url = ""
 llm_helper = ChatGLM_Helper.instance()
@@ -328,21 +329,28 @@ with gr.Blocks(css=css) as web_gc:
                     yield None
                 else:
                     chatbot.append((parse_text(prompt), ""))
-                    content_generate = agent_generate["sumary_result"][
-                        "content"]
-                    if "original" in agent_generate["sumary_result"]:
+                    if isinstance(agent_generate["sumary_result"],
+                                  Web_Parser_Tool_Response):
+                        sumary_result: Web_Parser_Tool_Response = agent_generate[
+                            "sumary_result"]
                         chatbot[-1] = (parse_text(
                             prompt
-                        ), f"原文：{agent_generate['sumary_result']['original']}\n"
+                        ), f"{chatbot[-1][1]}{sumary_result.content}<br/><br/>"
                                        )
-                    if isinstance(content_generate, list):
                         content = ""
-                        for item in content_generate:
-                            content = f"<a href=\"{item['link']}\">{item['title']}</a>\n{item['snippet']}\n\n------------------------\n\n"
+                        for item in sumary_result.original_infos:
+                            content = f"<a href=\"{item['link']}\">{item['title']}</a><br/>{item['snippet']}<br/>------------------------<br/><br/>"
                             chatbot[-1] = (parse_text(prompt),
                                            f"{chatbot[-1][1]}{content}")
                             yield chatbot
                     else:
+                        content_generate = agent_generate["sumary_result"][
+                            "content"]
+                        if "original" in agent_generate["sumary_result"]:
+                            chatbot[-1] = (parse_text(
+                                prompt
+                            ), f"原文：{agent_generate['sumary_result']['original']}\n"
+                                           )
                         for token in content_generate:
                             # 采用mapreducedocumentchain时返回的迭代器中包含output_text
                             if "output_text" in token:
@@ -394,6 +402,7 @@ with gr.Blocks(css=css) as web_gc:
         return gr.update(value='')
 
     def reset_state():
+        llm_helper.llm.history = llm_helper.llm.history[:1]
         return [], [], [], []
 
     load_llm_model.click(_load_llm_model, show_progress=True)
