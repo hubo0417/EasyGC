@@ -15,3 +15,6 @@ pypdf
 PyPDF2
 sentence-transformers
 openai==0.28.1
+tensorflow 
+keras
+opencv-python
