@@ -4,20 +4,18 @@ import uuid
 from typing import Union
 import requests
 from blip.blip_model import Blip_Model
-from utils.pipeline import Pipeline_Item, Pipeline_Process_Task
 from embeddings.embedding_helper import EmbeddingHelper
 from configs.base_config import GOOGLE_APIKEY, GOOGLE_SEARCH_ID
 from scipy.spatial import distance
 from PIL import Image
 
 
-class Image_Search_Util:
+class Image_Search_Util_Txt:
     search_count_from_google: int = 10
     search_count_from_embedding_db: int = 2
-    collection_name = "images_search_source"
-    destination: str = "D:\\EasyGC\\images_download"
+    collection_name = "images_blip_source"
+    destination: str = "D:\\EasyGC\\images_download\\blips"
     return_top_n = 0.25
-    search_way: str = "image"
 
     def __init__(self, **kwargs) -> None:
         if "search_count_from_google" in kwargs:
@@ -28,8 +26,6 @@ class Image_Search_Util:
                 kwargs["search_count_from_embedding_db"])
         if "return_top_n" in kwargs:
             self.return_top_n = float(kwargs["return_top_n"])
-        if "search_way" in kwargs:
-            self.search_way = kwargs["search_way"]
 
     # 1、用图片搜索的时候，提取图片文本摘要
     def blip_image(self, image_url: Union[list, str], prefix: str = None):
@@ -52,10 +48,7 @@ class Image_Search_Util:
     def search_embedding_by_text(self, text: str):
         final_data: list = None
         embeddings = EmbeddingHelper(collection_name=self.collection_name)
-        if self.search_way == "image":
-            where_document = None
-        else:
-            where_document = {"$contains": text}
+        where_document = {"$contains": text}
         search_result = embeddings.query(
             message=text,
             count=self.search_count_from_embedding_db,
@@ -162,9 +155,9 @@ class Image_Search_Util:
             size_is_approve: bool = False
             resize_step = 0.1
             while size_is_approve is False:
-                cur_width = int(width * (1 - resize_step))
-                cur_height = int(height * (1 - resize_step))
-                size_is_approve = cur_width * cur_height < 1024 * 1024
+                width = int(width * (1 - resize_step))
+                height = int(height * (1 - resize_step))
+                size_is_approve = width * height < 1024 * 1024
                 resize_step = resize_step + 0.1
             # 调整图片大小
             resized_image = original_image.resize((width, height))
